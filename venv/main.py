@@ -1,7 +1,9 @@
 import codecs
 import os
 import numpy
+import random
 import string
+import HausdorffMetricMatrix
 from GenerateImpostors import GenerateImpostors
 from GenerateNGramsFromTexts import GenerateNGramsFromTexts
 PATH = "Corpus/"
@@ -16,6 +18,14 @@ def get_docs_without_punctuation(str):
         doc += ' ' + w
     return doc
 
+def get_mock_dist_matrix():
+    dist = []
+    for i in range(41):
+        row = []
+        for j in range(41):
+            row.append(random.uniform(0, 100))
+        dist.append(row)
+    return dist
 
 ## ADD FILTERING TO SOME FILE TYPE (OPTIONAL)
 
@@ -37,4 +47,6 @@ for t in text:
 #
 impostors = GenerateImpostors(text, 5).impostors
 NG = GenerateNGramsFromTexts(impostors+text, 4).NG
+
+D = HausdorffMetricMatrix(get_mock_dist_matrix())
 
